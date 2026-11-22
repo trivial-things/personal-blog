@@ -6,6 +6,6 @@ export default defineConfig({
   base: '/personal-blog',
   trailingSlash: 'always',
   markdown: {
-    processor: satteri(),
-  },
+  processor: satteri(),
+},
 });

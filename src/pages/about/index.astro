@@ -112,8 +112,12 @@ const interests = [
         display: flex; justify-content: space-between;
       }
       body.dark {
-        --bg: #20221e; --surface: #292c25; --text: #e8e7df;
-        --muted: #a4a697; --accent: #a6ae83; --line: #3b3e35;
+        --bg: #222427;
+        --surface: #303337;
+        --text: #E1E2DF;
+        --muted: #A3A8A5;
+        --accent: #A6AE83;
+        --line: #414549;
       }
       @media (max-width: 680px) {
         .nav { padding: 0 20px; height: 68px; }
@@ -237,7 +241,7 @@ const interests = [
     <script is:inline>
       const toggle = document.getElementById('theme-toggle');
       const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'dark') document.body.classList.add('dark');
+      if (savedTheme !== 'light') document.body.classList.add('dark');
       if (toggle) {
         toggle.textContent = document.body.classList.contains('dark') ? '☀' : '☾';
         toggle.addEventListener('click', () => {

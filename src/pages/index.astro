@@ -313,9 +313,16 @@ const gardenSections = [
     .footer-inner { display: flex; justify-content: space-between; gap: 20px; }
 
     /* Dark mode is kept compatible with the site's existing theme preference. */
-    body.dark { --bg: #20221e; --surface: #292c25; --text: #e8e7df; --muted: #a4a697; --soft: #858879; --accent: #a6ae83; --accent-light: #a6ae83; --line: #3b3e35; }
-    body.dark .garden-card:hover { background: rgba(166,174,131,.05); }
-    body.dark .hero-shell { color: #f7f7f1; }
+    body.dark {
+  --bg: #222427;
+  --surface: #303337;
+  --text: #E1E2DF;
+  --muted: #A3A8A5;
+  --soft: #858D89;
+  --accent: #A6AE83;
+  --accent-light: #A6AE83;
+  --line: #414549;
+  }
 
     @media (max-width: 760px) {
       .nav-right { gap: 14px; }
@@ -464,8 +471,7 @@ const gardenSections = [
   <script is:inline>
     const themeToggle = document.querySelector('#theme-toggle');
     const savedTheme = localStorage.getItem('theme');
-    const isDark = savedTheme === 'dark';
-
+    const isDark = savedTheme === null || savedTheme === 'dark';
     document.body.classList.toggle('dark', isDark);
 
     if (themeToggle) {

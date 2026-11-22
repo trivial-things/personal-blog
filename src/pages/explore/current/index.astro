@@ -85,10 +85,40 @@ const sections = [
     .note strong { color: #78815b; font-weight: 600; }
     footer { padding: 28px 0; border-top: 1px solid #e8e6df; color: #99998e; font-size: 12px; }
     .footer-inner { display: flex; justify-content: space-between; gap: 20px; }
-    body.dark { color: #e8e6df; background: #20211e; }
-    body.dark header, body.dark section, body.dark footer, body.dark .item-list, body.dark .item, body.dark .snapshot { border-color: #3a3b35; }
-    body.dark .nav-links, body.dark .theme-toggle, body.dark .intro p, body.dark .section-description, body.dark .item-detail { color: #aaa99d; }
-    body.dark .note { background: #292a25; color: #aaa99d; }
+    body.dark {
+  color: #E1E2DF;
+  background: #222427;
+}
+
+body.dark header,
+body.dark section,
+body.dark footer,
+body.dark .item-list,
+body.dark .item,
+body.dark .snapshot {
+  border-color: #414549;
+}
+
+body.dark .nav-links,
+body.dark .theme-toggle,
+body.dark .intro p,
+body.dark .section-description,
+body.dark .item-detail,
+body.dark .item-state,
+body.dark .breadcrumb {
+  color: #A3A8A5;
+}
+
+body.dark .note {
+  background: #303337;
+  color: #A3A8A5;
+}
+
+body.dark .theme-toggle:hover,
+body.dark .breadcrumb a:hover,
+body.dark .item:hover .item-title {
+  color: #A6AE83;
+}
     @media (max-width: 700px) {
       .container { width: calc(100% - 36px); }
       .nav-right { gap: 12px; }
@@ -183,7 +213,7 @@ const sections = [
   <script>
     const themeToggle = document.querySelector('#theme-toggle');
     const savedTheme = localStorage.getItem('theme');
-    const isDark = savedTheme === 'dark';
+    const isDark = savedTheme === null || savedTheme === 'dark';
     document.body.classList.toggle('dark', isDark);
     if (themeToggle) {
       themeToggle.textContent = isDark ? '☀' : '☾';

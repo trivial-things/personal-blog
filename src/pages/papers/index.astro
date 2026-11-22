@@ -142,33 +142,33 @@ const dateFormatter = new Intl.DateTimeFormat('zh-CN', {
     }
 
     /* Dark mode */
-    :global(body.dark) {
-      color: #e8e6df;
-      background: #20211e;
-    }
+:global(body.dark) {
+  color: #E1E2DF;
+  background: #222427;
+}
 
-    :global(body.dark) header,
-    :global(body.dark) .paper,
-    :global(body.dark) footer {
-      border-color: #3a3b35;
-    }
+:global(body.dark) header,
+:global(body.dark) .paper,
+:global(body.dark) footer {
+  border-color: #414549;
+}
 
-    :global(body.dark) .back,
-    :global(body.dark) .intro,
-    :global(body.dark) .paper-name,
-    :global(body.dark) .meta,
-    :global(body.dark) .tag,
-    :global(body.dark) footer {
-      color: #aaa99d;
-    }
+:global(body.dark) .back,
+:global(body.dark) .intro,
+:global(body.dark) .paper-name,
+:global(body.dark) .meta,
+:global(body.dark) .tag,
+:global(body.dark) footer {
+  color: #A3A8A5;
+}
 
-    :global(body.dark) .tag {
-      border-color: #3a3b35;
-    }
+:global(body.dark) .tag {
+  border-color: #414549;
+}
 
-    :global(body.dark) .paper-link:hover h2 {
-      color: #aeb991;
-    }
+:global(body.dark) .paper-link:hover h2 {
+  color: #A6AE83;
+}
     @media (max-width: 600px) {
       main { padding-top: 52px; }
     }
@@ -215,7 +215,7 @@ const dateFormatter = new Intl.DateTimeFormat('zh-CN', {
 
   <script>
     const savedTheme = localStorage.getItem('theme');
-    document.body.classList.toggle('dark', savedTheme === 'dark');
+    document.body.classList.toggle('dark', savedTheme !== 'light');
   </script>
 </body>
 </html>

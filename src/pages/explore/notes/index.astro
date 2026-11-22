@@ -77,13 +77,64 @@ const notes = [
     .closing { margin: 56px 0 70px; padding: 22px 0 0; border-top: 1px solid #e8e6df; color: #99998e; font-family: Georgia, serif; font-size: 14px; font-style: italic; text-align: center; }
     footer { padding: 28px 0; border-top: 1px solid #e8e6df; color: #99998e; font-size: 12px; }
     .footer-inner { display: flex; justify-content: space-between; gap: 20px; }
-    body.dark { color: #e8e6df; background: #20211e; }
-    body.dark header, body.dark footer, body.dark .note-list, body.dark .note, body.dark .closing { border-color: #3a3b35; }
-    body.dark .nav-links, body.dark .theme-toggle, body.dark .intro p, body.dark .note-description { color: #aaa99d; }
-    body.dark .note:hover { background: #292a25; }
-    body.dark .filter { border-color: #45463e; color: #aaa99d; }
-    body.dark .filter[aria-pressed="true"] { background: #35372d; border-color: #747b5d; color: #d5d6c7; }
-    body.dark .tag { border-color: #45463e; }
+    body.dark {
+  color: #E1E2DF;
+  background: #222427;
+}
+
+body.dark header,
+body.dark footer,
+body.dark .note-list,
+body.dark .note,
+body.dark .closing {
+  border-color: #414549;
+}
+
+body.dark .nav-links,
+body.dark .theme-toggle,
+body.dark .intro p,
+body.dark .note-description,
+body.dark .breadcrumb,
+body.dark .motto,
+body.dark .note-date,
+body.dark .empty,
+body.dark .closing,
+body.dark footer {
+  color: #A3A8A5;
+}
+
+body.dark .eyebrow,
+body.dark .note-type,
+body.dark .arrow {
+  color: #A6AE83;
+}
+
+body.dark .note:hover {
+  background: #303337;
+}
+
+body.dark .filter {
+  border-color: #414549;
+  color: #A3A8A5;
+}
+
+body.dark .filter[aria-pressed="true"] {
+  background: #3A3E36;
+  border-color: #A6AE83;
+  color: #E1E2DF;
+}
+
+body.dark .tag {
+  border-color: #414549;
+  color: #A3A8A5;
+}
+
+body.dark .chinese-title,
+body.dark .breadcrumb a:hover,
+body.dark .nav-links a:hover,
+body.dark .theme-toggle:hover {
+  color: #A6AE83;
+}
     @media (max-width: 700px) {
       .container { width: calc(100% - 36px); }
       .nav-right { gap: 12px; }
@@ -167,7 +218,7 @@ const notes = [
   <script>
     const themeToggle = document.querySelector('#theme-toggle');
     const savedTheme = localStorage.getItem('theme');
-    const isDark = savedTheme === 'dark';
+    const isDark = savedTheme === null || savedTheme === 'dark';
     document.body.classList.toggle('dark', isDark);
     if (themeToggle) {
       themeToggle.textContent = isDark ? '☀' : '☾';

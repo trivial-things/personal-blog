@@ -185,48 +185,76 @@ const base = import.meta.env.BASE_URL;
   }
 
   /* Dark mode */
-  :global(body.dark) {
-    color: #e8e6df;
-    background: #20211e;
-  }
+:global(body.dark) {
+  color: #E1E2DF;
+  background: #222427;
+}
 
-  :global(body.dark) header,
-  :global(body.dark) article,
-  :global(body.dark) footer {
-    border-color: #3a3b35;
-  }
+:global(body.dark) header,
+:global(body.dark) article,
+:global(body.dark) footer {
+  border-color: #414549;
+}
 
-  :global(body.dark) nav a:first-child {
-    color: #e8e6df;
-  }
+:global(body.dark) nav a:first-child {
+  color: #E1E2DF;
+}
 
-  :global(body.dark) nav a:last-child,
-  :global(body.dark) main > div:first-child,
-  :global(body.dark) main > div:nth-of-type(2),
-  :global(body.dark) main > p,
-  :global(body.dark) main > div:nth-of-type(3) span,
-  :global(body.dark) article blockquote,
-  :global(body.dark) footer {
-    color: #aaa99d;
-  }
+:global(body.dark) nav a:last-child,
+:global(body.dark) main > div:first-child,
+:global(body.dark) main > div:nth-of-type(2),
+:global(body.dark) main > p,
+:global(body.dark) main > div:nth-of-type(3) span,
+:global(body.dark) article blockquote,
+:global(body.dark) footer {
+  color: #A3A8A5;
+}
 
-  :global(body.dark) a {
-    color: #aeb991;
-  }
+:global(body.dark) a {
+  color: #A6AE83;
+}
 
-  :global(body.dark) main > div:nth-of-type(3) span,
-  :global(body.dark) article th,
-  :global(body.dark) article td {
-    border-color: #3a3b35;
-  }
+:global(body.dark) main > div:nth-of-type(3) span,
+:global(body.dark) article th,
+:global(body.dark) article td {
+  border-color: #414549;
+}
 
-  :global(body.dark) article pre {
-    background: #2c2d28;
-  }
+:global(body.dark) article pre {
+  background: #303337;
+  color: #E1E2DF;
+}
 
-  :global(body.dark) article blockquote {
-    border-left-color: #78815b;
-  }
+:global(body.dark) article blockquote {
+  border-left-color: #A6AE83;
+}
+/* Footnotes */
+article :global(a[data-footnote-ref]),
+article :global(a[data-footnote-backref]) {
+  color: #78815B;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+article :global(a[data-footnote-ref]:hover),
+article :global(a[data-footnote-backref]:hover) {
+  color: #A6AE83;
+}
+
+:global(body.dark) article :global(a[data-footnote-ref]),
+:global(body.dark) article :global(a[data-footnote-backref]) {
+  color: #A6AE83;
+}
+
+:global(body.dark) article :global(a[data-footnote-ref]:hover),
+:global(body.dark) article :global(a[data-footnote-backref]:hover) {
+  color: #C1C99D;
+}
+
+article :global(a[data-footnote-backref] svg) {
+  fill: currentColor;
+  stroke: currentColor;
+}
   @media (max-width: 600px) {
     main {
       padding-top: 48px;
@@ -237,8 +265,7 @@ const base = import.meta.env.BASE_URL;
 <script>
   // 1. 读取并应用全站主题
   const savedTheme = localStorage.getItem('theme');
-  document.body.classList.toggle('dark', savedTheme === 'dark');
-
+  document.body.classList.toggle('dark', savedTheme !== 'light');
   // 2. 转换 Markdown 文章内链
   const article = document.querySelector('.paper-content');
   const base = article?.getAttribute('data-base') ?? '/';
