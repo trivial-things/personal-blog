@@ -3,7 +3,7 @@ import { satteri } from '@astrojs/markdown-satteri';
 
 export default defineConfig({
   site: 'https://trivial-things.github.io',
-  base: '/paper-notes',
+  base: '/personal-blog',
   trailingSlash: 'always',
   markdown: {
     processor: satteri(),

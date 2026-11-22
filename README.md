@@ -78,9 +78,9 @@ npm run preview
 
 项目当前按 GitHub Pages 项目站点配置，站点地址为：
 
-<https://trivial-things.github.io/paper-notes/>
+<https://trivial-things.github.io/personal-blog/>
 
-Astro 的 `base` 配置为 `/paper-notes`。部署时需要确保 GitHub Pages
+Astro 的 `base` 配置为 `/personal-blog`。部署时需要确保 GitHub Pages
 的发布配置与项目构建配置保持一致。
 
 GitHub Actions 自动部署工作流将在部署配置完成后启用。
