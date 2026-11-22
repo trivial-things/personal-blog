@@ -210,8 +210,16 @@ const base = import.meta.env.BASE_URL;
   color: #A3A8A5;
 }
 
-:global(body.dark) a {
-  color: #A6AE83;
+:global(body.dark) article :global(a) {
+  color: #C1C99D;
+  text-decoration-color: #78815B;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+
+:global(body.dark) article :global(a:hover) {
+  color: #E1E2DF;
+  text-decoration-color: #A6AE83;
 }
 
 :global(body.dark) main > div:nth-of-type(3) span,
