@@ -1,0 +1,200 @@
+---
+const base = import.meta.env.BASE_URL;
+
+const notes = [
+  {
+    type: "RESEARCH NOTE",
+    date: "A QUESTION ABOUT DEEP LEARNING",
+    title: "为什么一个简单的加法能够改变深层网络的训练？",
+    description: "从 ResNet 的残差连接出发，思考恒等映射、梯度传播与深层网络优化之间的关系。",
+    tags: ["ResNet", "Optimization", "Deep Learning"],
+    href: `${base}papers/2026-11-21-resnet/`,
+  },
+  {
+    type: "RESEARCH NOTE",
+    date: "A QUESTION ABOUT PERCEPTION",
+    title: "从二维图像到三维世界：视觉感知还需要什么？",
+    description: "二维图像提供了对现实世界的有限观测。机器还需要怎样的表示与推理，才能理解空间结构和几何关系？",
+    tags: ["3D Vision", "Perception", "Open Questions"],
+    href: `${base}explore/research/`,
+  },
+  {
+    type: "PERSONAL ESSAY",
+    date: "REFLECTIONS ON LEARNING",
+    title: "从阅读论文开始，逐渐找到自己感兴趣的问题",
+    description: "记录从理解模型结构，到追问设计动机，再到逐渐关注研究问题的学习过程。",
+    tags: ["Learning", "Research", "Reflection"],
+    href: `${base}explore/journey/`,
+  },
+];
+
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width" />
+  <meta name="description" content="Personal essays and research notes — ideas worth keeping." />
+  <title>Notes & Thoughts | Explore Journey</title>
+  <style>
+    :root { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #292b25; background: #faf9f6; font-synthesis: none; }
+    * { box-sizing: border-box; }
+    body { margin: 0; line-height: 1.7; background: #faf9f6; transition: background .25s, color .25s; }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1080px, calc(100% - 48px)); margin: 0 auto; }
+    header { border-bottom: 1px solid #e8e6df; }
+    nav { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { font-family: Georgia, serif; font-size: 21px; font-weight: 600; white-space: nowrap; }
+    .nav-right, .nav-links { display: flex; align-items: center; }
+    .nav-right { gap: 28px; }
+    .nav-links { gap: 26px; color: #77796e; font-size: 14px; }
+    .nav-links a:hover, .theme-toggle:hover { color: #78815b; }
+    .theme-toggle { border: 0; background: none; color: #77796e; font-size: 19px; cursor: pointer; }
+    .breadcrumb { padding-top: 38px; color: #99998e; font-size: 12px; letter-spacing: .5px; }
+    .breadcrumb a:hover { color: #78815b; }
+    .eyebrow { color: #858675; font-size: 11px; letter-spacing: 2.2px; text-transform: uppercase; }
+    h1, h2, h3 { font-family: Georgia, serif; font-weight: 500; }
+    .intro { max-width: 760px; padding: 32px 0 54px; }
+    h1 { margin: 12px 0 8px; font-size: clamp(42px, 6vw, 62px); line-height: 1.15; letter-spacing: -1.5px; }
+    .chinese-title { margin: 0 0 18px; color: #78815b; font-size: 23px; }
+    .intro p { max-width: 690px; margin: 0; color: #77796e; font-size: 15px; line-height: 2; }
+    .motto { margin-top: 22px; color: #99998e; font-family: Georgia, serif; font-size: 14px; font-style: italic; }
+    .filters { display: flex; flex-wrap: wrap; gap: 9px; margin: 4px 0 26px; }
+    .filter { padding: 7px 13px; border: 1px solid #e3e2d9; border-radius: 2px; color: #77796e; background: transparent; font: inherit; font-size: 11px; letter-spacing: .4px; cursor: pointer; }
+    .filter[aria-pressed="true"] { border-color: #a0a58a; background: #eeeee6; color: #596044; }
+    .note-list { border-top: 1px solid #e8e6df; }
+    .note { display: grid; grid-template-columns: 175px minmax(0, 1fr) 28px; gap: 26px; padding: 27px 7px; border-bottom: 1px solid #e8e6df; transition: background .2s, padding .2s; }
+    .note:hover { padding-left: 15px; padding-right: 15px; background: #f4f3ed; }
+    .note-type { color: #78815b; font-size: 10px; letter-spacing: 1.4px; }
+    .note-date { margin-top: 7px; color: #99998e; font-size: 10px; letter-spacing: .6px; }
+    .note h2 { margin: 0 0 8px; font-size: 23px; line-height: 1.4; }
+    .note-description { max-width: 690px; margin: 0; color: #77796e; font-size: 13px; line-height: 1.9; }
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 13px; }
+    .tag { padding: 3px 9px; border: 1px solid #e3e2d9; border-radius: 2px; color: #858675; font-size: 10px; }
+    .arrow { align-self: center; color: #a0a58a; font-size: 20px; }
+    .empty { display: none; padding: 36px 0; color: #99998e; font-family: Georgia, serif; font-style: italic; }
+    .closing { margin: 56px 0 70px; padding: 22px 0 0; border-top: 1px solid #e8e6df; color: #99998e; font-family: Georgia, serif; font-size: 14px; font-style: italic; text-align: center; }
+    footer { padding: 28px 0; border-top: 1px solid #e8e6df; color: #99998e; font-size: 12px; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 20px; }
+    body.dark { color: #e8e6df; background: #20211e; }
+    body.dark header, body.dark footer, body.dark .note-list, body.dark .note, body.dark .closing { border-color: #3a3b35; }
+    body.dark .nav-links, body.dark .theme-toggle, body.dark .intro p, body.dark .note-description { color: #aaa99d; }
+    body.dark .note:hover { background: #292a25; }
+    body.dark .filter { border-color: #45463e; color: #aaa99d; }
+    body.dark .filter[aria-pressed="true"] { background: #35372d; border-color: #747b5d; color: #d5d6c7; }
+    body.dark .tag { border-color: #45463e; }
+    @media (max-width: 700px) {
+      .container { width: calc(100% - 36px); }
+      .nav-right { gap: 12px; }
+      .nav-links { gap: 13px; font-size: 12px; }
+      .nav-links a:nth-child(3) { display: none; }
+      .intro { padding: 28px 0 42px; }
+      .note { grid-template-columns: 1fr 22px; gap: 8px 14px; padding: 22px 3px; }
+      .note-meta { grid-column: 1 / -1; }
+      .note-content { grid-column: 1; }
+      .arrow { grid-column: 2; grid-row: 2; }
+      .note h2 { font-size: 20px; }
+      .footer-inner { flex-direction: column; gap: 5px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="container">
+      <a class="brand" href={base}>Personal Blog</a>
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href={base}>Home</a>
+          <a href={`${base}explore/`}>Explore</a>
+          <a href={`${base}papers/`}>Papers</a>
+          <a href={`${base}about/`}>About</a>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">☾</button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="breadcrumb"><a href={`${base}explore/`}>EXPLORE JOURNEY</a> &nbsp; / &nbsp; NOTES & THOUGHTS</div>
+    <div class="intro">
+      <div class="eyebrow">IDEAS WORTH KEEPING</div>
+      <h1>Notes & Thoughts</h1>
+      <div class="chinese-title">记录值得留下的想法</div>
+      <p>
+        有些想法来自论文阅读，有些来自学习中的疑问，也有些只是某个尚未成熟的念头。
+        它们不一定都有完整的答案，却可能成为下一次探索的起点。
+      </p>
+      <div class="motto">A place for questions, reflections and unfinished ideas.</div>
+    </div>
+
+    <section>
+      <div class="filters" role="group" aria-label="Filter notes">
+        <button class="filter" data-filter="all" aria-pressed="true">All Notes</button>
+        <button class="filter" data-filter="PERSONAL ESSAY" aria-pressed="false">Personal Essays</button>
+        <button class="filter" data-filter="RESEARCH NOTE" aria-pressed="false">Research Notes</button>
+      </div>
+
+      <div class="note-list" id="note-list">
+        {notes.map((note) => (
+          <a class="note" href={note.href} data-type={note.type}>
+            <div class="note-meta">
+              <div class="note-type">{note.type}</div>
+              <div class="note-date">{note.date}</div>
+            </div>
+            <div class="note-content">
+              <h2>{note.title}</h2>
+              <p class="note-description">{note.description}</p>
+              <div class="tags">{note.tags.map((tag) => <span class="tag">{tag}</span>)}</div>
+            </div>
+            <div class="arrow">↗</div>
+          </a>
+        ))}
+      </div>
+      <div class="empty" id="empty-state">No notes in this category yet. More ideas will find their way here.</div>
+    </section>
+
+    <div class="closing">Not every question needs an immediate answer. Some are worth keeping.</div>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span>Explore Journey · Notes & Thoughts</span>
+      <span><a href={`${base}explore/`}>← Back to Explore</a></span>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.querySelector('#theme-toggle');
+    const savedTheme = localStorage.getItem('theme');
+    const isDark = savedTheme === 'dark';
+    document.body.classList.toggle('dark', isDark);
+    if (themeToggle) {
+      themeToggle.textContent = isDark ? '☀' : '☾';
+      themeToggle.addEventListener('click', () => {
+        const dark = document.body.classList.toggle('dark');
+        localStorage.setItem('theme', dark ? 'dark' : 'light');
+        themeToggle.textContent = dark ? '☀' : '☾';
+      });
+    }
+
+    const filterButtons = document.querySelectorAll('.filter');
+    const noteItems = document.querySelectorAll('.note');
+    const emptyState = document.querySelector('#empty-state');
+
+    filterButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const selected = button.dataset.filter;
+        let visibleCount = 0;
+        filterButtons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+        noteItems.forEach((note) => {
+          const visible = selected === 'all' || note.dataset.type === selected;
+          note.hidden = !visible;
+          if (visible) visibleCount += 1;
+        });
+        if (emptyState) emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>

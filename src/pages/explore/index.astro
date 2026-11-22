@@ -1,0 +1,461 @@
+---
+const base = import.meta.env.BASE_URL;
+const chapters = [
+  {
+    number: "01",
+    eyebrow: "THE PATH SO FAR",
+    title: "My Journey",
+    subtitle: "A path shaped by learning, questions and gradual discoveries.",
+    description: "从基础知识的积累，到接触深度学习，再到逐渐形成自己的兴趣方向，记录一路上的变化与思考。",
+    href: `${base}explore/journey/`,
+    side: "left",
+  },
+  {
+    number: "02",
+    eyebrow: "QUESTIONS & CURIOSITY",
+    title: "Research Taste",
+    subtitle: "Fields I am drawn to, and questions I want to understand.",
+    description: "整理感兴趣的研究领域、持续关注的问题，以及那些影响我理解人工智能的论文与思想。",
+    href: `${base}explore/research/`,
+    side: "right",
+  },
+  {
+    number: "03",
+    eyebrow: "ON THE DESK",
+    title: "Current Desk",
+    subtitle: "What I am learning, exploring and building these days.",
+    description: "阶段性记录正在学习的知识、正在探索的问题，以及动手实践的内容。",
+    href: `${base}explore/current/`,
+    side: "left",
+  },
+  {
+    number: "04",
+    eyebrow: "IDEAS WORTH KEEPING",
+    title: "Notes & Thoughts",
+    subtitle: "Personal essays and research notes along the way.",
+    description: "保存值得留下的想法、问题与推理，让尚未成熟的思考也有一个可以生长的地方。",
+    href: `${base}explore/notes/`,
+    side: "right",
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width" />
+  <meta name="description" content="Explore Journey — a record of learning, questioning and becoming." />
+  <title>Explore Journey | Personal Blog</title>
+  <style>
+    :root {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #292b25;
+      background: #faf9f6;
+      font-synthesis: none;
+      scroll-behavior: smooth;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      line-height: 1.7;
+      background: #faf9f6;
+      transition: background 0.25s, color 0.25s;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(1080px, calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    header { border-bottom: 1px solid #e8e6df; }
+
+    nav {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      font-family: Georgia, serif;
+      font-size: 21px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .nav-right, .nav-links {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-right { gap: 28px; }
+    .nav-links { gap: 26px; color: #77796e; font-size: 14px; }
+    .nav-links a:hover, .theme-toggle:hover { color: #78815b; }
+
+    .theme-toggle {
+      border: 0;
+      background: none;
+      color: #77796e;
+      font-size: 19px;
+      cursor: pointer;
+    }
+
+    .hero {
+      min-height: 490px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 330px;
+      align-items: center;
+      gap: 64px;
+      padding: 78px 0 82px;
+    }
+
+    .eyebrow {
+      color: #858675;
+      font-size: 12px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 {
+      font-family: Georgia, serif;
+      font-weight: 500;
+    }
+
+    h1 {
+      margin: 18px 0 12px;
+      font-size: clamp(42px, 6vw, 66px);
+      line-height: 1.12;
+      letter-spacing: -1.8px;
+    }
+
+    .hero-cn {
+      margin: 0 0 18px;
+      color: #78815b;
+      font-size: clamp(21px, 3vw, 27px);
+      letter-spacing: 1px;
+    }
+
+    .hero-description {
+      max-width: 610px;
+      color: #77796e;
+      font-size: 15px;
+      line-height: 2;
+    }
+
+    .hero-art {
+      width: 100%;
+      max-width: 310px;
+      justify-self: end;
+      padding: 12px;
+      border: 1px solid #e8e6df;
+      background: #fffefa;
+      box-shadow: 0 12px 34px rgb(50 48 38 / 7%);
+      transform: rotate(1.2deg);
+    }
+
+    .hero-art img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+    }
+
+    .art-caption {
+      padding: 11px 3px 2px;
+      color: #858675;
+      font-family: Georgia, serif;
+      font-size: 12px;
+      letter-spacing: .5px;
+    }
+
+    section {
+      padding: 58px 0 66px;
+      border-top: 1px solid #e8e6df;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 20px;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 31px;
+    }
+
+    .section-intro {
+      max-width: 650px;
+      margin: 0;
+      color: #858675;
+      font-size: 14px;
+    }
+
+    .chapter-list {
+      margin-top: 34px;
+      border-top: 1px solid #e8e6df;
+    }
+
+    .chapter {
+      display: grid;
+      grid-template-columns: 74px minmax(0, 1fr) 190px 30px;
+      align-items: center;
+      gap: 22px;
+      padding: 27px 8px;
+      border-bottom: 1px solid #e8e6df;
+      transition: background .2s, padding .2s;
+    }
+
+    .chapter:hover {
+      padding-left: 16px;
+      padding-right: 16px;
+      background: #f4f3ed;
+    }
+
+    .chapter-number {
+      color: #a0a58a;
+      font-family: Georgia, serif;
+      font-size: 20px;
+    }
+
+    .chapter-label {
+      color: #99998e;
+      font-size: 10px;
+      letter-spacing: 1.8px;
+    }
+
+    .chapter h3 {
+      margin: 3px 0 5px;
+      font-size: 25px;
+    }
+
+    .chapter-subtitle {
+      color: #77796e;
+      font-family: Georgia, serif;
+      font-size: 13px;
+      font-style: italic;
+    }
+
+    .chapter-description {
+      color: #858675;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .chapter-arrow {
+      color: #a0a58a;
+      font-size: 21px;
+      text-align: right;
+    }
+
+    .recent {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px 42px;
+      margin-top: 28px;
+    }
+
+    .recent-item {
+      padding: 17px 0;
+      border-top: 1px solid #e8e6df;
+    }
+
+    .recent-meta {
+      color: #99998e;
+      font-size: 11px;
+      letter-spacing: .5px;
+    }
+
+    .recent-item h3 {
+      margin: 6px 0 4px;
+      font-size: 19px;
+    }
+
+    .recent-item p {
+      margin: 0;
+      color: #858675;
+      font-size: 13px;
+    }
+
+    footer {
+      padding: 28px 0;
+      border-top: 1px solid #e8e6df;
+      color: #99998e;
+      font-size: 12px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    body.dark { color: #e8e6df; background: #20211e; }
+    body.dark header, body.dark section, body.dark footer,
+    body.dark .chapter-list, body.dark .chapter,
+    body.dark .recent-item { border-color: #3a3b35; }
+    body.dark .nav-links, body.dark .theme-toggle,
+    body.dark .hero-description, body.dark .section-intro,
+    body.dark .chapter-subtitle, body.dark .chapter-description,
+    body.dark .recent-item p { color: #aaa99d; }
+    body.dark .hero-art { background: #292a25; border-color: #3a3b35; }
+    body.dark .chapter:hover { background: #292a25; }
+
+    @media (max-width: 760px) {
+      .hero {
+        min-height: auto;
+        grid-template-columns: minmax(0, 1fr) 220px;
+        gap: 28px;
+        padding: 64px 0;
+      }
+      .hero-art { max-width: 220px; }
+      .chapter {
+        grid-template-columns: 48px minmax(0, 1fr) 24px;
+        gap: 14px;
+      }
+      .chapter-description { display: none; }
+      .chapter h3 { font-size: 22px; }
+    }
+
+    @media (max-width: 560px) {
+      .container { width: calc(100% - 36px); }
+      nav { min-height: 68px; }
+      .brand { font-size: 18px; }
+      .nav-right { gap: 12px; }
+      .nav-links { gap: 13px; font-size: 12px; }
+      .nav-links a:nth-child(3) { display: none; }
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        padding: 58px 0 54px;
+      }
+      h1 { font-size: 43px; }
+      .hero-art {
+        width: min(72%, 250px);
+        justify-self: start;
+        margin-left: 8px;
+      }
+      section { padding: 44px 0 50px; }
+      .section-heading { align-items: flex-start; flex-direction: column; }
+      .chapter { padding: 22px 2px; }
+      .chapter:hover { padding-left: 8px; padding-right: 8px; }
+      .chapter-subtitle { font-size: 12px; }
+      .recent { grid-template-columns: 1fr; gap: 8px; }
+      .footer-inner { flex-direction: column; gap: 5px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav class="container">
+      <a class="brand" href={base}>Personal Blog</a>
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href={base}>Home</a>
+          <a href={`${base}explore/`}>Explore</a>
+          <a href={`${base}papers/`}>Papers</a>
+          <a href={`${base}about/`}>About</a>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">☾</button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero" style="border-top: 0;">
+      <div>
+        <div class="eyebrow">A PERSONAL SPACE FOR EXPLORATION</div>
+        <h1>Explore<br />Journey</h1>
+        <p class="hero-cn">记录所学，探索所想</p>
+        <p class="hero-description">
+          把好奇心变成行动，把思考留在路上。这里记录我的学习路径、研究兴趣、
+          正在进行的实践，以及探索过程中逐渐形成的想法。
+        </p>
+      </div>
+      <div class="hero-art">
+        <img src={`${base}images/moon-walking.jpg`} alt="n-buna《月を歩いている》专辑封面" />
+        <div class="art-caption">月を歩いている · n-buna</div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <h2>Four Chapters</h2>
+        <span class="eyebrow">A JOURNEY IN PROGRESS</span>
+      </div>
+      <p class="section-intro">
+        学习并不总是一条笔直的道路。这里的四个章节，记录不同阶段的积累、兴趣、实践与思考。
+      </p>
+
+      <div class="chapter-list">
+        {chapters.map((chapter) => (
+          <a class="chapter" href={chapter.href}>
+            <div class="chapter-number">{chapter.number}</div>
+            <div>
+              <div class="chapter-label">{chapter.eyebrow}</div>
+              <h3>{chapter.title}</h3>
+              <div class="chapter-subtitle">{chapter.subtitle}</div>
+            </div>
+            <div class="chapter-description">{chapter.description}</div>
+            <div class="chapter-arrow">↗</div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <h2>Recently Updated</h2>
+        <span class="section-note">A few things from the journey</span>
+      </div>
+      <p class="section-intro">
+        最近整理和更新的内容。随着各个章节逐渐充实，这里会成为探索历程的动态索引。
+      </p>
+      <div class="recent">
+        <a class="recent-item" href={`${base}papers/2026-11-21-resnet/`}>
+          <div class="recent-meta">PAPERS · NOV 21, 2026</div>
+          <h3>ResNet：一个加法为什么能拯救深网络</h3>
+          <p>从残差连接出发，理解深层网络的优化问题。</p>
+        </a>
+        <a class="recent-item" href={`${base}papers/2026-11-18-alexnet/`}>
+          <div class="recent-meta">PAPERS · NOV 18, 2026</div>
+          <h3>AlexNet：一张图走完的前向数据流</h3>
+          <p>梳理经典卷积神经网络的结构与计算过程。</p>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span>Explore Journey · Personal Blog</span>
+      <span>A record of learning, questioning and becoming.</span>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.querySelector('#theme-toggle');
+    const savedTheme = localStorage.getItem('theme');
+    const isDark = savedTheme === 'dark';
+    document.body.classList.toggle('dark', isDark);
+
+    if (themeToggle) {
+      themeToggle.textContent = isDark ? '☀' : '☾';
+      themeToggle.addEventListener('click', () => {
+        const dark = document.body.classList.toggle('dark');
+        localStorage.setItem('theme', dark ? 'dark' : 'light');
+        themeToggle.textContent = dark ? '☀' : '☾';
+      });
+    }
+  </script>
+</body>
+</html>

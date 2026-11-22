@@ -1,0 +1,198 @@
+---
+const base = import.meta.env.BASE_URL;
+
+const sections = [
+  {
+    number: "01",
+    name: "Learning",
+    subtitle: "Knowledge, courses & technical foundations",
+    description: "持续补充基础知识与专业能力，为理解更复杂的问题打下基础。",
+    items: [
+      { title: "Computer Vision", detail: "持续学习视觉领域的基础方法与模型", state: "ONGOING" },
+      { title: "Mathematical Foundations", detail: "数学基础与模型背后的原理", state: "FOUNDATION" },
+      { title: "CS231n", detail: "计划系统学习的计算机视觉课程", state: "TO EXPLORE" },
+    ],
+  },
+  {
+    number: "02",
+    name: "Exploring",
+    subtitle: "Research questions, papers & directions",
+    description: "通过论文阅读和方向调研，逐渐理解不同研究领域正在探索的问题。",
+    items: [
+      { title: "3D Vision", detail: "关注三维场景理解、空间重建与三维感知", state: "EXPLORING" },
+      { title: "Natural Language Processing", detail: "持续关注语言表示、注意力机制与语言模型", state: "ONGOING INTEREST" },
+      { title: "Embodied AI & Robotics", detail: "了解感知、空间理解与真实环境交互的联系", state: "EXPLORING" },
+      { title: "Reinforcement Learning", detail: "未来希望进一步系统了解的方向", state: "FUTURE INTEREST" },
+    ],
+  },
+  {
+    number: "03",
+    name: "Building",
+    subtitle: "Code, tools & personal projects",
+    description: "把学习过程转化为可以运行、展示、复用和持续完善的实践。",
+    items: [
+      { title: "Personal Blog", detail: "搭建并持续完善个人知识与作品空间", state: "IN PROGRESS", href: base },
+      { title: "Paper Notes", detail: "整理经典论文的阅读笔记与个人理解", state: "ONGOING", href: `${base}papers/` },
+    ],
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width" />
+  <meta name="description" content="A snapshot of what I am learning, exploring and building." />
+  <title>Current Desk | Explore Journey</title>
+  <style>
+    :root { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #292b25; background: #faf9f6; font-synthesis: none; }
+    * { box-sizing: border-box; }
+    body { margin: 0; line-height: 1.7; background: #faf9f6; transition: background .25s, color .25s; }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1080px, calc(100% - 48px)); margin: 0 auto; }
+    header { border-bottom: 1px solid #e8e6df; }
+    nav { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { font-family: Georgia, serif; font-size: 21px; font-weight: 600; white-space: nowrap; }
+    .nav-right, .nav-links { display: flex; align-items: center; }
+    .nav-right { gap: 28px; }
+    .nav-links { gap: 26px; color: #77796e; font-size: 14px; }
+    .nav-links a:hover, .theme-toggle:hover { color: #78815b; }
+    .theme-toggle { border: 0; background: none; color: #77796e; font-size: 19px; cursor: pointer; }
+    .breadcrumb { padding-top: 38px; color: #99998e; font-size: 12px; letter-spacing: .5px; }
+    .breadcrumb a:hover { color: #78815b; }
+    .eyebrow { color: #858675; font-size: 11px; letter-spacing: 2.2px; text-transform: uppercase; }
+    h1, h2, h3 { font-family: Georgia, serif; font-weight: 500; }
+    .intro { max-width: 760px; padding: 32px 0 54px; }
+    h1 { margin: 12px 0 8px; font-size: clamp(42px, 6vw, 62px); line-height: 1.15; letter-spacing: -1.5px; }
+    .chinese-title { margin: 0 0 18px; color: #78815b; font-size: 23px; }
+    .intro p { max-width: 690px; margin: 0; color: #77796e; font-size: 15px; line-height: 2; }
+    .snapshot { display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 25px; padding-top: 18px; border-top: 1px solid #e8e6df; color: #858675; font-size: 11px; letter-spacing: .7px; }
+    .snapshot strong { color: #78815b; font-weight: 600; }
+    section { padding: 44px 0 55px; border-top: 1px solid #e8e6df; }
+    .section-top { display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 22px; }
+    .section-number { color: #a0a58a; font-family: Georgia, serif; font-size: 22px; }
+    .section-heading h2 { margin: 0 0 3px; font-size: 32px; }
+    .section-subtitle { color: #78815b; font-family: Georgia, serif; font-size: 14px; font-style: italic; }
+    .section-description { max-width: 680px; margin: 13px 0 0; color: #858675; font-size: 13px; }
+    .item-list { margin: 26px 0 0 92px; border-top: 1px solid #e8e6df; }
+    .item { display: grid; grid-template-columns: minmax(0, 1fr) 160px; align-items: center; gap: 20px; padding: 15px 4px; border-bottom: 1px solid #e8e6df; }
+    .item-title { font-family: Georgia, serif; font-size: 18px; }
+    .item-detail { margin-top: 2px; color: #858675; font-size: 12px; }
+    .item-state { justify-self: end; color: #99998e; font-size: 9px; letter-spacing: 1.2px; text-align: right; }
+    .item:hover .item-title { color: #78815b; }
+    .note { margin: 48px 0 70px 92px; padding: 20px 24px; border-left: 2px solid #a0a58a; background: #f3f2ec; color: #77796e; font-size: 13px; }
+    .note strong { color: #78815b; font-weight: 600; }
+    footer { padding: 28px 0; border-top: 1px solid #e8e6df; color: #99998e; font-size: 12px; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 20px; }
+    body.dark { color: #e8e6df; background: #20211e; }
+    body.dark header, body.dark section, body.dark footer, body.dark .item-list, body.dark .item, body.dark .snapshot { border-color: #3a3b35; }
+    body.dark .nav-links, body.dark .theme-toggle, body.dark .intro p, body.dark .section-description, body.dark .item-detail { color: #aaa99d; }
+    body.dark .note { background: #292a25; color: #aaa99d; }
+    @media (max-width: 700px) {
+      .container { width: calc(100% - 36px); }
+      .nav-right { gap: 12px; }
+      .nav-links { gap: 13px; font-size: 12px; }
+      .nav-links a:nth-child(3) { display: none; }
+      .intro { padding: 28px 0 42px; }
+      .section-top { grid-template-columns: 42px minmax(0, 1fr); gap: 14px; }
+      .item-list, .note { margin-left: 56px; }
+      .item { grid-template-columns: 1fr; gap: 3px; }
+      .item-state { justify-self: start; text-align: left; }
+      .footer-inner { flex-direction: column; gap: 5px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="container">
+      <a class="brand" href={base}>Personal Blog</a>
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href={base}>Home</a>
+          <a href={`${base}explore/`}>Explore</a>
+          <a href={`${base}papers/`}>Papers</a>
+          <a href={`${base}about/`}>About</a>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">☾</button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="breadcrumb"><a href={`${base}explore/`}>EXPLORE JOURNEY</a> &nbsp; / &nbsp; CURRENT DESK</div>
+    <div class="intro">
+      <div class="eyebrow">A SNAPSHOT OF THE PRESENT</div>
+      <h1>Current Desk</h1>
+      <div class="chinese-title">此刻正在学习与实践</div>
+      <p>
+        这里记录我现阶段正在投入的事情：正在补充的知识、逐渐展开的研究兴趣，
+        以及正在动手搭建和完善的项目。它不是一份固定计划，而是一张会随着学习不断变化的工作台。
+      </p>
+      <div class="snapshot">
+        <span><strong>LEARNING</strong> &nbsp; Building foundations</span>
+        <span><strong>EXPLORING</strong> &nbsp; Finding questions</span>
+        <span><strong>BUILDING</strong> &nbsp; Turning ideas into practice</span>
+      </div>
+    </div>
+
+    {sections.map((section) => (
+      <section>
+        <div class="section-top">
+          <div class="section-number">{section.number}</div>
+          <div class="section-heading">
+            <h2>{section.name}</h2>
+            <div class="section-subtitle">{section.subtitle}</div>
+            <p class="section-description">{section.description}</p>
+          </div>
+        </div>
+        <div class="item-list">
+          {section.items.map((item) => {
+            const content = (
+              <>
+                <div>
+                  <div class="item-title">{item.title}</div>
+                  <div class="item-detail">{item.detail}</div>
+                </div>
+                <div class="item-state">{item.state}</div>
+              </>
+            );
+            return item.href ? (
+              <a class="item" href={item.href}>{content}</a>
+            ) : (
+              <div class="item">{content}</div>
+            );
+          })}
+        </div>
+      </section>
+    ))}
+
+    <div class="note">
+      <strong>A living snapshot</strong><br />
+      这里的内容会随着阶段变化定期整理。我希望每隔一段时间回看一次：哪些知识已经建立，哪些问题值得继续追问，又有哪些想法真正变成了实践。
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span>Explore Journey · Current Desk</span>
+      <span><a href={`${base}explore/`}>← Back to Explore</a></span>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.querySelector('#theme-toggle');
+    const savedTheme = localStorage.getItem('theme');
+    const isDark = savedTheme === 'dark';
+    document.body.classList.toggle('dark', isDark);
+    if (themeToggle) {
+      themeToggle.textContent = isDark ? '☀' : '☾';
+      themeToggle.addEventListener('click', () => {
+        const dark = document.body.classList.toggle('dark');
+        localStorage.setItem('theme', dark ? 'dark' : 'light');
+        themeToggle.textContent = dark ? '☀' : '☾';
+      });
+    }
+  </script>
+</body>
+</html>

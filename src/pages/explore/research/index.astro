@@ -1,0 +1,288 @@
+---
+const base = import.meta.env.BASE_URL;
+
+const topics = [
+  {
+    number: "01",
+    category: "COMPUTER VISION",
+    title: "Visual Representation",
+    question: "How do machines learn to see?",
+    description: "机器如何学习有效的视觉表征？从卷积网络到残差网络，我希望理解模型如何提取特征，以及不同结构设计为何有效。",
+    tags: ["CNN", "Representation Learning", "Deep Learning"],
+    status: "CURRENT FOCUS",
+  },
+  {
+    number: "02",
+    category: "3D VISION",
+    title: "3D Perception",
+    question: "How do machines understand the 3D world?",
+    description: "机器如何理解三维空间与真实世界？二维图像只是现实的一种投影，我想进一步理解如何从视觉观测中恢复空间结构、感知几何关系。",
+    tags: ["3D Vision", "3D Reconstruction", "Spatial Perception"],
+    status: "EXPLORING",
+  },
+  {
+    number: "03",
+    category: "NATURAL LANGUAGE PROCESSING",
+    title: "Language Understanding",
+    question: "How do machines represent and understand language?",
+    description: "机器如何表示和理解人类语言？我关注语言表示、上下文建模、注意力机制，以及语言模型如何捕捉语言中的关系与语义。",
+    tags: ["NLP", "Attention", "Language Models"],
+    status: "ONGOING INTEREST",
+  },
+  {
+    number: "04",
+    category: "REINFORCEMENT LEARNING",
+    title: "Learning & Decision-Making",
+    question: "How can agents learn to make decisions?",
+    description: "智能体如何通过与环境交互学习并做出决策？我对强化学习、探索与利用、策略优化等问题抱有兴趣，希望未来进一步系统了解。",
+    tags: ["Reinforcement Learning", "Decision Making", "Agent Learning"],
+    status: "FUTURE EXPLORATION",
+  },
+];
+
+const papers = [
+  {
+    title: "Attention Is All You Need",
+    authors: "Vaswani et al.",
+    year: "2017",
+    idea: "以自注意力机制为核心构建序列模型，展示了不依赖循环结构也能有效建模序列关系的路径。",
+    takeaway: "这篇论文让我开始关注注意力机制，以及模型如何通过不同位置之间的信息交互建立表示。",
+    href: `${base}papers/`,
+  },
+  {
+    title: "ImageNet Classification with Deep Convolutional Neural Networks",
+    authors: "Krizhevsky, Sutskever & Hinton",
+    year: "2012",
+    idea: "AlexNet 通过深层卷积网络、GPU 训练、ReLU 与数据增强等设计，在 ImageNet 分类任务上取得了重要突破。",
+    takeaway: "阅读 AlexNet 的过程让我开始从输入尺寸、特征图变化和计算过程等角度理解一个网络的完整结构。",
+    href: `${base}papers/2026-11-18-alexnet/`,
+  },
+  {
+    title: "Deep Residual Learning for Image Recognition",
+    authors: "He, Zhang, Ren & Sun",
+    year: "2016",
+    idea: "通过残差连接为网络提供恒等捷径，使深层网络更容易优化，并能够训练更深的模型。",
+    takeaway: "ResNet 让我意识到，简洁的结构设计有时能够改变整个优化问题，也让我开始追问模型设计背后的数学原因。",
+    href: `${base}papers/2026-11-21-resnet/`,
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width" />
+  <meta name="description" content="Research interests, questions and ideas that shape my learning." />
+  <title>Research Taste | Explore Journey</title>
+  <style>
+    :root { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #292b25; background: #faf9f6; font-synthesis: none; }
+    * { box-sizing: border-box; }
+    body { margin: 0; line-height: 1.7; background: #faf9f6; transition: background .25s, color .25s; }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1080px, calc(100% - 48px)); margin: 0 auto; }
+    header { border-bottom: 1px solid #e8e6df; }
+    nav { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { font-family: Georgia, serif; font-size: 21px; font-weight: 600; white-space: nowrap; }
+    .nav-right, .nav-links { display: flex; align-items: center; }
+    .nav-right { gap: 28px; }
+    .nav-links { gap: 26px; color: #77796e; font-size: 14px; }
+    .nav-links a:hover, .theme-toggle:hover { color: #78815b; }
+    .theme-toggle { border: 0; background: none; color: #77796e; font-size: 19px; cursor: pointer; }
+    .breadcrumb { padding-top: 38px; color: #99998e; font-size: 12px; letter-spacing: .5px; }
+    .breadcrumb a:hover { color: #78815b; }
+    .eyebrow { color: #858675; font-size: 11px; letter-spacing: 2.2px; text-transform: uppercase; }
+    h1, h2, h3 { font-family: Georgia, serif; font-weight: 500; }
+    .intro { max-width: 760px; padding: 32px 0 55px; }
+    h1 { margin: 12px 0 8px; font-size: clamp(42px, 6vw, 62px); line-height: 1.15; letter-spacing: -1.5px; }
+    .chinese-title { margin: 0 0 18px; color: #78815b; font-size: 23px; }
+    .intro p { max-width: 690px; margin: 0; color: #77796e; font-size: 15px; line-height: 2; }
+    section { padding: 48px 0 62px; border-top: 1px solid #e8e6df; }
+    .section-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; margin-bottom: 10px; }
+    h2 { margin: 0; font-size: 31px; }
+    .section-description { max-width: 690px; margin: 0; color: #858675; font-size: 14px; }
+    .topic-list { margin-top: 30px; }
+    .topic { display: grid; grid-template-columns: 66px minmax(0, 1fr) 150px; gap: 22px; padding: 27px 8px 29px; border-top: 1px solid #e8e6df; }
+    .topic:last-child { border-bottom: 1px solid #e8e6df; }
+    .topic-number { color: #a0a58a; font-family: Georgia, serif; font-size: 20px; }
+    .topic-category { color: #99998e; font-size: 10px; letter-spacing: 1.8px; }
+    .topic h3 { margin: 3px 0 4px; font-size: 26px; }
+    .question { margin: 0 0 12px; color: #78815b; font-family: Georgia, serif; font-size: 15px; font-style: italic; }
+    .topic-description { max-width: 700px; margin: 0; color: #77796e; font-size: 13px; line-height: 1.9; }
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; }
+    .tag { padding: 3px 9px; border: 1px solid #e3e2d9; border-radius: 2px; color: #858675; font-size: 10px; }
+    .status { align-self: start; justify-self: end; padding-top: 4px; color: #99998e; font-size: 9px; letter-spacing: 1.2px; text-align: right; }
+    .paper-list { margin-top: 30px; }
+    .paper { display: grid; grid-template-columns: minmax(0, 1fr) 150px; gap: 24px; padding: 24px 0; border-top: 1px solid #e8e6df; }
+    .paper:last-child { border-bottom: 1px solid #e8e6df; }
+    .paper h3 { margin: 0 0 3px; font-size: 22px; line-height: 1.35; }
+    .paper-authors { color: #99998e; font-size: 12px; }
+    .paper-idea { margin: 13px 0 7px; color: #77796e; font-size: 13px; }
+    .takeaway { margin: 0; color: #77796e; font-size: 13px; }
+    .takeaway strong { color: #78815b; font-weight: 600; }
+    .paper-link { align-self: center; justify-self: end; color: #78815b; font-size: 12px; }
+    .paper-link:hover { text-decoration: underline; }
+    .future-note { margin-top: 24px; padding: 18px 22px; border-left: 2px solid #a0a58a; background: #f3f2ec; color: #77796e; font-size: 13px; }
+    footer { padding: 28px 0; border-top: 1px solid #e8e6df; color: #99998e; font-size: 12px; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 20px; }
+    body.dark { color: #e8e6df; background: #20211e; }
+    body.dark header, body.dark section, body.dark footer, body.dark .topic, body.dark .paper { border-color: #3a3b35; }
+    body.dark .nav-links, body.dark .theme-toggle, body.dark .intro p, body.dark .section-description, body.dark .topic-description, body.dark .paper-idea, body.dark .takeaway { color: #aaa99d; }
+    body.dark .tag { border-color: #45463e; }
+    body.dark .future-note { background: #292a25; color: #aaa99d; }
+    @media (max-width: 700px) {
+      .container { width: calc(100% - 36px); }
+      .nav-right { gap: 12px; }
+      .nav-links { gap: 13px; font-size: 12px; }
+      .nav-links a:nth-child(3) { display: none; }
+      .intro { padding: 28px 0 42px; }
+      .topic { grid-template-columns: 42px minmax(0, 1fr); gap: 14px; }
+      .status { grid-column: 2; justify-self: start; padding: 0; }
+      .paper { grid-template-columns: 1fr; gap: 10px; }
+      .paper-link { justify-self: start; }
+      .footer-inner { flex-direction: column; gap: 5px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="container">
+      <a class="brand" href={base}>Personal Blog</a>
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href={base}>Home</a>
+          <a href={`${base}explore/`}>Explore</a>
+          <a href={`${base}papers/`}>Papers</a>
+          <a href={`${base}about/`}>About</a>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">☾</button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="breadcrumb"><a href={`${base}explore/`}>EXPLORE JOURNEY</a> &nbsp; / &nbsp; RESEARCH TASTE</div>
+    <div class="intro">
+      <div class="eyebrow">CURIOSITY, QUESTIONS & INFLUENCES</div>
+      <h1>Research Taste</h1>
+      <div class="chinese-title">兴趣所在，问题所向</div>
+      <p>
+        我还在不断认识不同的研究领域，也在寻找真正想深入的问题。
+        这一页记录目前吸引我的方向、反复出现的好奇，以及帮助我形成理解的论文与思想。
+        它们不是固定不变的标签，而是会随着学习继续生长的线索。
+      </p>
+    </div>
+
+    <section>
+      <div class="section-heading">
+        <h2>Areas of Interest</h2>
+        <span class="eyebrow">FIELDS I AM DRAWN TO</span>
+      </div>
+      <p class="section-description">不同领域之间并非彼此孤立。它们从不同角度回应我对感知、表示、理解与决策的兴趣。</p>
+      <div class="topic-list">
+        {topics.map((topic) => (
+          <article class="topic">
+            <div class="topic-number">{topic.number}</div>
+            <div>
+              <div class="topic-category">{topic.category}</div>
+              <h3>{topic.title}</h3>
+              <p class="question">{topic.question}</p>
+              <p class="topic-description">{topic.description}</p>
+              <div class="tags">{topic.tags.map((tag) => <span class="tag">{tag}</span>)}</div>
+            </div>
+            <div class="status">{topic.status}</div>
+          </article>
+        ))}
+      </div>
+      <div class="future-note">
+        这些兴趣也自然延伸到 Embodied AI 与 Robotics 等交叉场景：当感知、空间理解与决策连接起来，机器如何在真实环境中行动，是我希望逐步理解的问题。
+      </div>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <h2>Questions I Care About</h2>
+        <span class="eyebrow">QUESTIONS BEHIND THE FIELDS</span>
+      </div>
+      <p class="section-description">比起只记住一个方向的名称，我更希望持续追问它试图解决的核心问题。</p>
+      <div class="topic-list">
+        <article class="topic">
+          <div class="topic-number">01</div>
+          <div>
+            <div class="topic-category">VISUAL REPRESENTATION</div>
+            <h3>机器如何形成有效的视觉表征？</h3>
+            <p class="topic-description">模型如何从原始图像中提取有用特征？网络结构、归纳偏置与训练方式又如何影响这些表征？</p>
+          </div>
+        </article>
+        <article class="topic">
+          <div class="topic-number">02</div>
+          <div>
+            <div class="topic-category">3D SPACE & PERCEPTION</div>
+            <h3>机器如何理解三维空间？</h3>
+            <p class="topic-description">如何从二维观测中推断几何结构与空间关系，并让机器形成对真实世界更完整的感知？</p>
+          </div>
+        </article>
+        <article class="topic">
+          <div class="topic-number">03</div>
+          <div>
+            <div class="topic-category">LANGUAGE REPRESENTATION</div>
+            <h3>机器如何表示并理解语言？</h3>
+            <p class="topic-description">上下文、注意力与语言表示如何共同作用，让模型捕捉词语之间的关系和更复杂的语义？</p>
+          </div>
+        </article>
+        <article class="topic">
+          <div class="topic-number">04</div>
+          <div>
+            <div class="topic-category">LEARNING & DECISION</div>
+            <h3>智能体如何学会做出决策？</h3>
+            <p class="topic-description">当学习发生在与环境的持续交互中，探索与利用、反馈信号和策略优化会带来怎样的挑战？</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <h2>Ideas & Influences</h2>
+        <span class="eyebrow">PAPERS THAT SHAPE MY THINKING</span>
+      </div>
+      <p class="section-description">一些帮助我建立理解、引发新问题的论文。这里记录的不只是论文讲了什么，也包括我从中带走了什么。</p>
+      <div class="paper-list">
+        {papers.map((paper, index) => (
+          <article class="paper">
+            <div>
+              <h3>{paper.title}</h3>
+              <div class="paper-authors">{paper.authors} · {paper.year}</div>
+              <p class="paper-idea">{paper.idea}</p>
+              <p class="takeaway"><strong>My Takeaway — </strong>{paper.takeaway}</p>
+            </div>
+            <a class="paper-link" href={paper.href}>Explore notes ↗</a>
+          </article>
+        ))}
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span>Explore Journey · Research Taste</span>
+      <span><a href={`${base}explore/`}>← Back to Explore</a></span>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.querySelector('#theme-toggle');
+    const savedTheme = localStorage.getItem('theme');
+    const isDark = savedTheme === 'dark';
+    document.body.classList.toggle('dark', isDark);
+    if (themeToggle) {
+      themeToggle.textContent = isDark ? '☀' : '☾';
+      themeToggle.addEventListener('click', () => {
+        const dark = document.body.classList.toggle('dark');
+        localStorage.setItem('theme', dark ? 'dark' : 'light');
+        themeToggle.textContent = dark ? '☀' : '☾';
+      });
+    }
+  </script>
+</body>
+</html>

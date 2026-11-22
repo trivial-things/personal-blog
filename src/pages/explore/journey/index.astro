@@ -1,0 +1,216 @@
+---
+const base = import.meta.env.BASE_URL;
+
+const stages = [
+  {
+    number: "01",
+    period: "THE BEGINNING",
+    title: "Starting from the Fundamentals",
+    chinese: "基础积累",
+    intro: "从基础出发，建立理解人工智能所需要的数学与编程能力。",
+    learned: [
+      "系统学习高等数学与线性代数，逐步建立数学分析和抽象思考的基础。",
+      "通过 C++ 与 Python 编程，将数学知识转化为实际计算与问题求解能力。",
+    ],
+    explored: "在学习基础知识的过程中，开始留意数学、算法与人工智能之间的联系。",
+    changed: "逐渐意识到，理解一个技术问题不仅需要知道如何使用它，也需要理解它为什么成立。",
+  },
+  {
+    number: "02",
+    period: "FIRST ENCOUNTERS",
+    title: "Discovering Deep Learning",
+    chinese: "接触深度学习",
+    intro: "从经典模型与论文开始，尝试理解深度学习方法背后的设计思想。",
+    learned: [
+      "接触深度学习的基本概念与神经网络结构。",
+      "阅读 Attention Is All You Need、AlexNet、ResNet 等经典论文，并整理阅读笔记。",
+    ],
+    explored: "关注模型结构、特征表示、注意力机制，以及不同设计选择如何影响模型表现。",
+    changed: "开始从阅读和复述论文，转向追问模型设计背后的动机、原理与取舍。",
+  },
+  {
+    number: "03",
+    period: "FINDING DIRECTIONS",
+    title: "Exploring Research Directions",
+    chinese: "研究方向探索",
+    intro: "在接触不同领域的过程中，逐渐形成自己的兴趣范围与问题意识。",
+    learned: [
+      "持续补充计算机视觉与自然语言处理相关知识。",
+      "围绕三维视觉、空间感知、具身智能与机器人等方向进行初步了解。",
+    ],
+    explored: "思考机器如何理解视觉信息、表示三维世界，以及如何在真实环境中感知与行动。",
+    changed: "从关注某个模型或技术本身，逐渐转向关注它试图解决的更大问题。",
+  },
+  {
+    number: "04",
+    period: "LEARNING BY DOING",
+    title: "Learning by Building",
+    chinese: "实践与沉淀",
+    intro: "通过持续记录与动手实践，把学习过程转化为可以积累和回顾的内容。",
+    learned: [
+      "撰写论文阅读笔记，梳理模型结构、关键公式与自己的理解。",
+      "搭建并持续完善个人博客，整理学习资料与阶段性成果。",
+    ],
+    explored: "尝试把阅读、思考、代码实践和知识整理连接起来，形成可持续的学习方式。",
+    changed: "认识到记录和表达本身也是学习的一部分：它们帮助我发现理解中的空白，并留下继续探索的线索。",
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width" />
+  <meta name="description" content="A learning journey from fundamentals to exploring research directions." />
+  <title>My Journey | Explore Journey</title>
+  <style>
+    :root {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #292b25;
+      background: #faf9f6;
+      font-synthesis: none;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; line-height: 1.7; background: #faf9f6; transition: background .25s, color .25s; }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1080px, calc(100% - 48px)); margin: 0 auto; }
+    header { border-bottom: 1px solid #e8e6df; }
+    nav { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { font-family: Georgia, serif; font-size: 21px; font-weight: 600; white-space: nowrap; }
+    .nav-right, .nav-links { display: flex; align-items: center; }
+    .nav-right { gap: 28px; }
+    .nav-links { gap: 26px; color: #77796e; font-size: 14px; }
+    .nav-links a:hover, .theme-toggle:hover { color: #78815b; }
+    .theme-toggle { border: 0; background: none; color: #77796e; font-size: 19px; cursor: pointer; }
+    .breadcrumb { padding-top: 38px; color: #99998e; font-size: 12px; letter-spacing: .5px; }
+    .breadcrumb a:hover { color: #78815b; }
+    .intro { max-width: 760px; padding: 32px 0 58px; }
+    .eyebrow { color: #858675; font-size: 11px; letter-spacing: 2.2px; text-transform: uppercase; }
+    h1, h2, h3 { font-family: Georgia, serif; font-weight: 500; }
+    h1 { margin: 12px 0 8px; font-size: clamp(42px, 6vw, 62px); line-height: 1.15; letter-spacing: -1.5px; }
+    .chinese-title { margin: 0 0 18px; color: #78815b; font-size: 23px; }
+    .intro p { max-width: 690px; margin: 0; color: #77796e; font-size: 15px; line-height: 2; }
+    .timeline { position: relative; padding: 8px 0 76px; }
+    .timeline::before { content: ""; position: absolute; left: 31px; top: 18px; bottom: 112px; width: 1px; background: #deded3; }
+    .stage { position: relative; display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 28px; padding: 0 0 58px; }
+    .stage:last-child { padding-bottom: 0; }
+    .marker { position: relative; z-index: 1; width: 64px; height: 64px; display: grid; place-items: center; border: 1px solid #c9cbb9; border-radius: 50%; background: #faf9f6; color: #78815b; font-family: Georgia, serif; font-size: 17px; }
+    .stage-content { padding: 4px 0 0; }
+    .stage-period { color: #99998e; font-size: 10px; letter-spacing: 2px; }
+    .stage h2 { margin: 5px 0 2px; font-size: clamp(25px, 3vw, 32px); }
+    .stage-chinese { color: #78815b; font-size: 15px; }
+    .stage-intro { margin: 13px 0 24px; color: #77796e; font-size: 14px; }
+    .reflection-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 38px; }
+    .reflection { border-top: 1px solid #e8e6df; padding-top: 12px; }
+    .reflection h3 { margin: 0 0 8px; color: #78815b; font-family: inherit; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; }
+    .reflection p, .reflection li { color: #77796e; font-size: 13px; line-height: 1.9; }
+    .reflection p { margin: 0; }
+    .reflection ul { margin: 0; padding-left: 18px; }
+    .reflection li + li { margin-top: 5px; }
+    .closing { margin: 68px 0 0 92px; padding: 24px 0 0; border-top: 1px solid #e8e6df; color: #99998e; font-family: Georgia, serif; font-size: 14px; font-style: italic; }
+    footer { padding: 28px 0; border-top: 1px solid #e8e6df; color: #99998e; font-size: 12px; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 20px; }
+    body.dark { color: #e8e6df; background: #20211e; }
+    body.dark header, body.dark footer, body.dark .reflection, body.dark .closing { border-color: #3a3b35; }
+    body.dark .nav-links, body.dark .theme-toggle, body.dark .intro p, body.dark .stage-intro, body.dark .reflection p, body.dark .reflection li { color: #aaa99d; }
+    body.dark .timeline::before { background: #4b4c43; }
+    body.dark .marker { background: #20211e; border-color: #666b55; }
+    @media (max-width: 700px) {
+      .container { width: calc(100% - 36px); }
+      .nav-right { gap: 12px; }
+      .nav-links { gap: 13px; font-size: 12px; }
+      .nav-links a:nth-child(3) { display: none; }
+      .intro { padding: 28px 0 42px; }
+      .stage { grid-template-columns: 48px minmax(0, 1fr); gap: 18px; padding-bottom: 46px; }
+      .marker { width: 48px; height: 48px; font-size: 14px; }
+      .timeline::before { left: 23px; bottom: 90px; }
+      .reflection-grid { grid-template-columns: 1fr; gap: 18px; }
+      .closing { margin-left: 66px; }
+      .footer-inner { flex-direction: column; gap: 5px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="container">
+      <a class="brand" href={base}>Personal Blog</a>
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href={base}>Home</a>
+          <a href={`${base}explore/`}>Explore</a>
+          <a href={`${base}papers/`}>Papers</a>
+          <a href={`${base}about/`}>About</a>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">☾</button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="breadcrumb"><a href={`${base}explore/`}>EXPLORE JOURNEY</a> &nbsp; / &nbsp; MY JOURNEY</div>
+    <section class="intro">
+      <div class="eyebrow">A CONTINUOUS PROCESS</div>
+      <h1>My Journey</h1>
+      <div class="chinese-title">一路走来的学习与探索</div>
+      <p>
+        这不是一份成果清单，而是一段仍在继续的过程。从基础知识的积累，到接触深度学习，
+        再到寻找真正感兴趣的问题，我希望把每一步的学习、尝试与变化都记录下来。
+      </p>
+    </section>
+
+    <div class="timeline">
+      {stages.map((stage) => (
+        <article class="stage">
+          <div class="marker">{stage.number}</div>
+          <div class="stage-content">
+            <div class="stage-period">{stage.period}</div>
+            <h2>{stage.title}</h2>
+            <div class="stage-chinese">{stage.chinese}</div>
+            <p class="stage-intro">{stage.intro}</p>
+            <div class="reflection-grid">
+              <div class="reflection">
+                <h3>What I Learned</h3>
+                <ul>
+                  {stage.learned.map((item) => <li>{item}</li>)}
+                </ul>
+              </div>
+              <div class="reflection">
+                <h3>What I Explored</h3>
+                <p>{stage.explored}</p>
+              </div>
+              <div class="reflection">
+                <h3>What Changed</h3>
+                <p>{stage.changed}</p>
+              </div>
+            </div>
+          </div>
+        </article>
+      ))}
+      <div class="closing">Still learning, still exploring, still becoming.</div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span>Explore Journey · My Journey</span>
+      <span><a href={`${base}explore/`}>← Back to Explore</a></span>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.querySelector('#theme-toggle');
+    const savedTheme = localStorage.getItem('theme');
+    const isDark = savedTheme === 'dark';
+    document.body.classList.toggle('dark', isDark);
+    if (themeToggle) {
+      themeToggle.textContent = isDark ? '☀' : '☾';
+      themeToggle.addEventListener('click', () => {
+        const dark = document.body.classList.toggle('dark');
+        localStorage.setItem('theme', dark ? 'dark' : 'light');
+        themeToggle.textContent = dark ? '☀' : '☾';
+      });
+    }
+  </script>
+</body>
+</html>

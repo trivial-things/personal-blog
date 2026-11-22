@@ -1,0 +1,295 @@
+---
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const papers = await getCollection('papers');
+
+  return papers.map((paper) => ({
+    params: { slug: paper.id },
+    props: { paper },
+  }));
+}
+
+const { paper } = Astro.props;
+const { Content } = await render(paper);
+
+const dateFormatter = new Intl.DateTimeFormat('zh-CN', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const base = import.meta.env.BASE_URL;
+---
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>{paper.data.title} | Papers</title>
+<style>
+  :root {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: #292b25;
+    background: #faf9f6;
+    font-synthesis: none;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    line-height: 1.8;
+  }
+
+  a {
+    color: #78815b;
+    text-decoration: none;
+  }
+
+  header {
+    border-bottom: 1px solid #e8e6df;
+  }
+
+  nav {
+    width: min(820px, calc(100% - 40px));
+    min-height: 68px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  nav a:first-child {
+    color: #292b25;
+    font-family: Georgia, serif;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  nav a:last-child {
+    color: #77796e;
+    font-size: 14px;
+  }
+
+  main {
+    width: min(820px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 64px 0 100px;
+  }
+
+  h1 {
+    margin: 18px 0;
+    font-family: Georgia, serif;
+    font-size: clamp(32px, 5vw, 46px);
+    line-height: 1.35;
+    font-weight: 500;
+  }
+
+  main > div:first-child {
+    color: #858675;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  main > div:nth-of-type(2) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    color: #858675;
+    font-size: 13px;
+  }
+
+  main > p {
+    color: #77796e;
+    font-size: 15px;
+  }
+
+  main > div:nth-of-type(3) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 18px;
+  }
+
+  main > div:nth-of-type(3) span {
+    padding: 3px 10px;
+    border: 1px solid #e5e3db;
+    border-radius: 20px;
+    color: #77796e;
+    font-size: 12px;
+  }
+
+  article {
+    margin-top: 56px;
+    padding-top: 36px;
+    border-top: 1px solid #e8e6df;
+    overflow-wrap: break-word;
+  }
+
+  article h2,
+  article h3,
+  article h4 {
+    margin-top: 2em;
+    font-family: Georgia, serif;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  article :global(img) {
+  display: block;
+  width: 100%;
+  max-width: 680px;
+  max-height: 520px;
+  height: auto;
+  object-fit: contain;
+  margin: 28px auto;
+}
+
+  article pre {
+    overflow-x: auto;
+    padding: 18px;
+    border-radius: 6px;
+    background: #f0efe9;
+  }
+
+  article blockquote {
+    margin: 24px 0;
+    padding: 4px 20px;
+    border-left: 3px solid #a0a58a;
+    color: #77796e;
+  }
+
+  article table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+  }
+
+  article th,
+  article td {
+    padding: 9px 12px;
+    border: 1px solid #e5e3db;
+  }
+
+  footer {
+    padding: 24px 20px;
+    border-top: 1px solid #e8e6df;
+    color: #99998e;
+    font-size: 13px;
+    text-align: center;
+  }
+
+  /* Dark mode */
+  :global(body.dark) {
+    color: #e8e6df;
+    background: #20211e;
+  }
+
+  :global(body.dark) header,
+  :global(body.dark) article,
+  :global(body.dark) footer {
+    border-color: #3a3b35;
+  }
+
+  :global(body.dark) nav a:first-child {
+    color: #e8e6df;
+  }
+
+  :global(body.dark) nav a:last-child,
+  :global(body.dark) main > div:first-child,
+  :global(body.dark) main > div:nth-of-type(2),
+  :global(body.dark) main > p,
+  :global(body.dark) main > div:nth-of-type(3) span,
+  :global(body.dark) article blockquote,
+  :global(body.dark) footer {
+    color: #aaa99d;
+  }
+
+  :global(body.dark) a {
+    color: #aeb991;
+  }
+
+  :global(body.dark) main > div:nth-of-type(3) span,
+  :global(body.dark) article th,
+  :global(body.dark) article td {
+    border-color: #3a3b35;
+  }
+
+  :global(body.dark) article pre {
+    background: #2c2d28;
+  }
+
+  :global(body.dark) article blockquote {
+    border-left-color: #78815b;
+  }
+  @media (max-width: 600px) {
+    main {
+      padding-top: 48px;
+    }
+  }
+</style>
+
+<script>
+  // 1. 读取并应用全站主题
+  const savedTheme = localStorage.getItem('theme');
+  document.body.classList.toggle('dark', savedTheme === 'dark');
+
+  // 2. 转换 Markdown 文章内链
+  const article = document.querySelector('.paper-content');
+  const base = article?.getAttribute('data-base') ?? '/';
+
+  article?.querySelectorAll('a[href$=".md"]').forEach((link) => {
+    const href = link.getAttribute('href');
+    if (!href) return;
+
+    const filename = href.split('/').pop();
+    if (!filename) return;
+
+    const slug = filename.replace(/\.md$/, '');
+    link.setAttribute('href', `${base}papers/${slug}/`);
+  });
+</script>
+
+</head>
+<body>
+  <header>
+    <nav>
+      <a href={base}>Personal Blog</a>
+      <a href={`${base}papers/`}>← All Papers</a>
+    </nav>
+  </header>
+
+  <main>
+    <div>Knowledge Garden / Papers</div>
+
+    <h1>{paper.data.title}</h1>
+
+    <div>
+      <span>{dateFormatter.format(paper.data.date)}</span>
+      <span>{paper.data.venue}</span>
+      <span>{paper.data.authors}</span>
+    </div>
+
+    <p>{paper.data.paper}</p>
+
+    <div>
+      {paper.data.tags.map((tag) => (
+        <span>{tag}</span>
+      ))}
+    </div>
+
+    <article class="paper-content" data-base={base}>
+      <Content />
+    </article>
+  </main>
+
+  <footer>
+    Academic Digital Garden
+  </footer>
+</body>
+</html>

@@ -1,0 +1,252 @@
+---
+const base = import.meta.env.BASE_URL;
+
+const interests = [
+  {
+    title: 'Computer Vision',
+    description: '视觉表征、图像理解与视觉感知',
+    status: 'Current focus',
+  },
+  {
+    title: 'Natural Language Processing',
+    description: '语言表示、语义理解与语言模型',
+    status: 'Ongoing interest',
+  },
+  {
+    title: '3D Vision',
+    description: '三维场景理解、空间重建与三维感知',
+    status: 'Exploring',
+  },
+  {
+    title: 'Embodied AI & Robotics',
+    description: '智能体如何感知、理解并与真实世界交互',
+    status: 'Exploring',
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="About me — a personal space for learning, thinking and exploring artificial intelligence." />
+    <title>About | Personal Blog</title>
+    <style>
+      :root {
+        --bg: #faf9f6;
+        --surface: #f3f1eb;
+        --text: #292b25;
+        --muted: #77796e;
+        --accent: #78815b;
+        --line: #e8e6df;
+        --serif: Georgia, 'Times New Roman', serif;
+        --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--sans);
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+      }
+      a { color: inherit; text-decoration: none; }
+      a:hover { color: var(--accent); }
+      .nav {
+        height: 76px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 0 28px;
+      }
+      .brand { font-family: var(--serif); font-size: 21px; letter-spacing: -.4px; }
+      .nav-right { display: flex; align-items: center; gap: 27px; color: var(--muted); font-size: 13px; }
+      .nav-right a.active { color: var(--text); }
+      #theme-toggle {
+        border: 1px solid var(--line); background: transparent; color: var(--text);
+        width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 16px;
+      }
+      main { max-width: 920px; margin: 0 auto; padding: 76px 28px 110px; }
+      .eyebrow {
+        color: var(--accent); text-transform: uppercase; letter-spacing: 2.2px;
+        font-size: 10px; font-weight: 600; margin: 0 0 18px;
+      }
+      h1, h2, h3 { font-family: var(--serif); font-weight: 400; }
+      h1 { font-size: clamp(42px, 6vw, 62px); line-height: 1.12; letter-spacing: -1.8px; margin: 0; }
+      .intro-grid {
+        display: grid; grid-template-columns: 220px minmax(0, 1fr);
+        gap: 54px; align-items: center; margin-bottom: 88px;
+      }
+      .portrait {
+        width: 220px; aspect-ratio: 1; object-fit: cover; display: block;
+        border-radius: 5px;
+      }
+      .lead { color: var(--muted); font-size: 15px; line-height: 1.9; max-width: 590px; margin: 24px 0 0; }
+      .intro-note { color: var(--text); font-size: 14px; margin-top: 18px; }
+      .section { padding: 34px 0 38px; border-top: 1px solid var(--line); }
+      .section-head { display: grid; grid-template-columns: 190px 1fr; gap: 30px; }
+      .section-label { color: var(--accent); font-size: 11px; letter-spacing: 1.8px; text-transform: uppercase; padding-top: 9px; }
+      .section-content h2 { font-size: 29px; margin: 0 0 17px; }
+      .section-content p { color: var(--muted); font-size: 14px; line-height: 1.9; margin: 0 0 12px; }
+      .background-line { display: flex; justify-content: space-between; gap: 20px; padding: 13px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+      .background-line:last-child { border-bottom: 0; }
+      .background-line span:last-child { color: var(--muted); text-align: right; }
+      .interest-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0 28px; }
+      .interest { padding: 17px 0 18px; border-bottom: 1px solid var(--line); }
+      .interest h3 { font-size: 20px; margin: 0 0 5px; }
+      .interest p { margin: 0 0 5px; font-size: 13px; }
+      .status { color: var(--accent); font-size: 10px; letter-spacing: 1.1px; text-transform: uppercase; }
+      .link-list { display: flex; flex-wrap: wrap; gap: 12px 26px; margin-top: 4px; }
+      .link-list a { font-family: var(--serif); font-size: 19px; border-bottom: 1px solid var(--line); padding-bottom: 4px; }
+      .closing { margin-top: 68px; padding: 30px 34px; background: var(--surface); border-radius: 4px; }
+      .closing p { margin: 0; font-family: var(--serif); font-size: 23px; line-height: 1.5; }
+      .closing a { color: var(--accent); border-bottom: 1px solid currentColor; }
+      footer {
+        max-width: 1080px; margin: 0 auto; padding: 25px 28px 38px;
+        border-top: 1px solid var(--line); color: var(--muted); font-size: 11px;
+        display: flex; justify-content: space-between;
+      }
+      body.dark {
+        --bg: #20221e; --surface: #292c25; --text: #e8e7df;
+        --muted: #a4a697; --accent: #a6ae83; --line: #3b3e35;
+      }
+      @media (max-width: 680px) {
+        .nav { padding: 0 20px; height: 68px; }
+        .nav-right { gap: 14px; font-size: 12px; }
+        .brand { font-size: 18px; }
+        main { padding: 55px 22px 80px; }
+        .intro-grid { grid-template-columns: 118px 1fr; gap: 22px; margin-bottom: 62px; }
+        .portrait { width: 118px; }
+        h1 { font-size: 42px; }
+        .lead { font-size: 13px; margin-top: 14px; }
+        .intro-note { font-size: 12px; margin-top: 10px; }
+        .section-head { grid-template-columns: 1fr; gap: 12px; }
+        .section-label { padding-top: 0; }
+        .interest-list { grid-template-columns: 1fr; }
+        .background-line { font-size: 13px; }
+        .closing { padding: 24px; }
+        .closing p { font-size: 20px; }
+      }
+      @media (max-width: 420px) {
+        .nav-right { gap: 10px; }
+        .nav-right a { font-size: 11px; }
+        .intro-grid { grid-template-columns: 1fr; }
+        .portrait { width: 145px; }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav">
+      <a class="brand" href={base}>Personal Blog</a>
+      <div class="nav-right">
+        <a href={base}>Home</a>
+        <a href={`${base}explore/`}>Explore</a>
+        <a href={`${base}papers/`}>Papers</a>
+        <a class="active" href={`${base}about/`}>About</a>
+        <button id="theme-toggle" aria-label="Toggle dark mode">☾</button>
+      </div>
+    </nav>
+
+    <main>
+      <div class="intro-grid">
+        <img class="portrait" src={`${base}images/moon-walking.jpg`} alt="Album artwork of n-buna's 月を歩いている" />
+        <div>
+          <p class="eyebrow">A little about me</p>
+          <h1>About</h1>
+          <p class="lead">
+            我是西安交通大学人工智能专业的本科生。喜欢从原理出发理解人工智能，
+            也乐于探索不同技术方向背后的问题与可能性。
+          </p>
+          <p class="intro-note">A place to learn, think, and keep exploring.</p>
+        </div>
+      </div>
+
+      <section class="section">
+        <div class="section-head">
+          <div class="section-label">01 / Background</div>
+          <div class="section-content">
+            <h2>Where I come from</h2>
+            <div class="background-line"><span>西安交通大学</span><span>人工智能 · 本科</span></div>
+            <div class="background-line"><span>Foundations</span><span>数学 · 高等数学与线性代数</span></div>
+            <div class="background-line"><span>Programming</span><span>C++ · Python · NumPy</span></div>
+            <div class="background-line"><span>Paper Reading</span><span>Attention · AlexNet · ResNet</span></div>
+            <p style="margin-top:18px">
+              我希望不止停留在使用模型，也能理解它们为什么有效：从数学基础、模型结构，
+              到训练过程中的设计选择。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div class="section-label">02 / Interests</div>
+          <div class="section-content">
+            <h2>Things I am curious about</h2>
+            <p>
+              目前主要关注计算机视觉与自然语言处理，并持续探索三维视觉等方向。
+              我也对具身智能与机器人感兴趣，想进一步理解智能系统如何感知并与真实世界交互。
+            </p>
+            <div class="interest-list">
+              {interests.map((item) => (
+                <article class="interest">
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
+                  <span class="status">{item.status}</span>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div class="section-label">03 / Links</div>
+          <div class="section-content">
+            <h2>Find me elsewhere</h2>
+            <p>一些持续更新的记录与代码。</p>
+            <div class="link-list">
+              <a href="https://github.com/trivial-things/paper-notes" target="_blank" rel="noreferrer">GitHub ↗</a>
+              <a href={`${base}papers/`}>Paper Notes ↗</a>
+              <a href={`${base}explore/`}>Explore ↗</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="closing">
+        <p>
+          This is an ongoing journey.<br />
+          You can follow along in <a href={`${base}explore/journey/`}>My Journey</a>,
+          or explore the ideas I am collecting in <a href={`${base}explore/`}>Explore</a>.
+        </p>
+      </div>
+    </main>
+
+    <footer>
+      <span>© {new Date().getFullYear()} Personal Blog</span>
+      <span>Made for learning and exploring</span>
+    </footer>
+
+    <script is:inline>
+      const toggle = document.getElementById('theme-toggle');
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') document.body.classList.add('dark');
+      if (toggle) {
+        toggle.textContent = document.body.classList.contains('dark') ? '☀' : '☾';
+        toggle.addEventListener('click', () => {
+          document.body.classList.toggle('dark');
+          const dark = document.body.classList.contains('dark');
+          localStorage.setItem('theme', dark ? 'dark' : 'light');
+          toggle.textContent = dark ? '☀' : '☾';
+        });
+      }
+    </script>
+  </body>
+</html>
